@@ -60,13 +60,13 @@ const FavoriteList = () => {
   };
 
   return (
-    <div className='flex flex-wrap items-center justify-start gap-10 px-20 py-10 mt-20'>
+    <div className='flex flex-wrap  justify-start gap-10 px-20 py-10 mt-20'>
         {
          favoriteHeartArray.length > 0 ?
           ( favoriteHeartArray?.map((item) => (
 
 
-            <Card  sx={{ maxWidth: 345 }}>
+            <Card className='!bg-transparent border-2   !border-borderBox !rounded-xl !duration-300 w-[300px] !transition-all !ease-in-out  !text-textColor   shadow-none hover:shadow-custom-hover' sx={{ maxWidth: 345 }}>
                 <CardHeader
                     avatar={
                         <Avatar sx={{ bgcolor: "transparent" }} aria-label="recipe">
@@ -83,7 +83,7 @@ const FavoriteList = () => {
                 />
                 <Link to={"details/" + item.id}>
                     <CardMedia
-                        className='cursor-pointer'
+                        className='cursor-pointer !w-[350px] !h-[370px] !p-[4px] !rounded-xl'
                         component="img"
                         height="194"
                         image={API_IMG + item.poster_path}
