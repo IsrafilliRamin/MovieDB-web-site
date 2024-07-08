@@ -54,6 +54,7 @@ export default function RecipeReviewCard() {
     console.log(data);
 
 
+
 /* item center a function yazilsin */
     return (
         <div className='flex flex-wrap  justify-between max-sm:justify-center gap-10'>
@@ -61,8 +62,9 @@ export default function RecipeReviewCard() {
                 data?.map((item) => (
 
 
-                    <Card className='max-sm:!w-[90vw]' sx={{ maxWidth: 345 }}>
+                    <Card   className='max-sm:!w-[90vw] !bg-transparent border-2   !border-borderBox !rounded-xl !duration-300 w-[300px] !transition-all !ease-in-out  !text-textColor   shadow-none hover:shadow-custom-hover' sx={{ maxWidth: 345 }}>
                         <CardHeader
+                       
                             avatar={
                                 <Avatar sx={{ bgcolor: "transparent" }} aria-label="recipe">
                                     <img src={LogoMovie} alt="" />
@@ -73,12 +75,13 @@ export default function RecipeReviewCard() {
                                     {/* <MoreVertIcon /> */} <StarIcon className='text-yellow-500' /> <div className='text-yellow-500 text-sm'>{item.vote_average}</div>
                                 </IconButton>
                             }
+                            
                             title={item.original_title}
                             subheader={item.release_date}
                         />
                         <Link to={"details/" + item.id}>
                             <CardMedia
-                                className='cursor-pointer'
+                                className='cursor-pointer !w-[350px] !h-[370px] !p-[4px] !rounded-xl '
                                 component="img"
                                 height="194"
                                 image={API_IMG + item.poster_path}
@@ -86,7 +89,7 @@ export default function RecipeReviewCard() {
                             />
                         </Link>
                         <CardContent className='!relative'>
-                            <Typography variant="body2" color="text.secondary">
+                            <Typography  className='!text-white' variant="body2" color="text.secondary">
                                 {item.title}
                             </Typography>
                         </CardContent>
