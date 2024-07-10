@@ -20,7 +20,7 @@ const Header = () => {
             </div>
             <nav className='flex gap-7 items-center'>
                 <ul className='flex gap-7 transition-all ease-linear items-center max-lg:flex-col max-lg:justify-between max-lg:py-20  max-lg:absolute max-lg:h-[100vh] max-lg:bg-black max-lg:w-60 max-lg:left-[-100%] max-lg:top-0'>
-                    <li><NavLink onClick={()=>dispatch(getNameMovies("popular"))} to={"/"}>Latest</NavLink></li>
+                    <li><NavLink onClick={()=>dispatch(getNameMovies("popular"))} to={"/home"}>Latest</NavLink></li>
                     <li><NavLink onClick={()=>dispatch(getNameMovies("now_playing"))} to={"/nowplaying"}>Now Playing</NavLink></li>
                     <li><NavLink onClick={()=>dispatch(getNameMovies("popular"))} to={"/popular"}>Popular</NavLink></li>
                     <li><NavLink onClick={()=>dispatch(getNameMovies("top_rated"))} to={"/toprated"}>Top Rated</NavLink></li>
@@ -29,8 +29,9 @@ const Header = () => {
                 </ul>
                 <div className='flex gap-7 items-center'>
                   <NavLink to="favoritelist"><div className="relative"><FavoriteIcon  className='text-red-500 max-sm:!text-4xl' /> <div className='absolute top-[-7px] right-[-7px] bg-blue-400 text-white rounded-full w-[17px] h-[17px] flex items-center justify-center'>{watchlistCount}</div></div></NavLink>  
-                    <AccountBoxIcon className='cursor-pointer max-sm:!text-4xl' />
-                <MenuIcon className='lg:invisible  max-lg:hidden max-sm:!text-4xl'/>
+                   
+               <NavLink to={"/"} > <AccountBoxIcon className='cursor-pointer max-sm:!text-4xl' />  </NavLink> 
+               <MenuIcon className='lg:invisible  max-lg:hidden max-sm:!text-4xl'/>
                 </div>
             </nav>
         </div>

@@ -7,6 +7,8 @@ import Sharing from "../pages/Sharing";
 import TopRated from "../pages/TopRated";
 import Upcoming from "../pages/Upcoming";
 import FavoriteList from "../pages/FavoriteList";
+import Signup from "../pages/Signup";
+import Signin from "../pages/Signin";
 
 
 
@@ -17,6 +19,14 @@ export const ROUTER = [
         children: [
             {
                 index: true,
+                element: <Signup />
+            },
+            {
+                path: "/signin",
+                element: <Signin />
+            },
+            {
+                path: "/home",
                 element: <Home />
             },
             {
