@@ -8,8 +8,7 @@ const SectionSearch = () => {
     const { data, searchValue, movieName } = useSelector(state => state.allState);
     const dispatch = useDispatch()
 
-    /* https://api.themoviedb.org/3/search/movie?api_key=20325b57b63187bb9a782879cbcc0ac5&query=${value} */
-
+   
 
     const submit = async (e) => {
         e.preventDefault();
@@ -17,10 +16,10 @@ const SectionSearch = () => {
         const data = await response.json();
         if (searchValue === "") {
             getData("popular").then(resp => dispatch(searchSubmit(resp.results)))
-            console.log("test if");
+           
         } else {
-            console.log("elseSearc");
             dispatch(searchSubmit(data.results));
+            dispatch(getSearchValue(""));
         }
     }
 
