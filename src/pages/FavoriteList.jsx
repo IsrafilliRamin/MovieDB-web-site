@@ -81,7 +81,7 @@ const FavoriteList = () => {
                     title={item.original_title}
                     subheader={item.release_date}
                 />
-                <Link to={"details/" + item.id}>
+                <Link to={"/details/" + item.id}>
                     <CardMedia
                         className='cursor-pointer !w-[350px] !h-[370px] !p-[4px] !rounded-xl'
                         component="img"

@@ -16,7 +16,7 @@ const Header = () => {
     return (
         <div className='flex justify-between w-full bg-blue-950 h-20 items-center max-sm:px-3 px-20 fixed top-0 z-30'>
             <div className="h-12 w-12">
-                <Link to="/"><img className='h-full' src={moviDBLogo} alt="movidbLogo" /></Link>
+                <Link onClick={()=>dispatch(getNameMovies("popular"))} to="/home"><img className='h-full' src={moviDBLogo} alt="movidbLogo" /></Link>
             </div>
             <nav className='flex gap-7 items-center'>
                 <ul className='flex gap-7 transition-all ease-linear items-center max-lg:flex-col max-lg:justify-between max-lg:py-20  max-lg:absolute max-lg:h-[100vh] max-lg:bg-black max-lg:w-60 max-lg:left-[-100%] max-lg:top-0'>
