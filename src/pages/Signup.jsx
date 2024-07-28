@@ -87,16 +87,17 @@ export default function Signup() {
             <Container className="!h-[100vh] !max-w-full !w-[100vw] !p-0 !m-0  overflow-hidden !flex-column !flex !items-center !justify-center" >
                 <CssBaseline />
                 <Box
+                className="w-[35vw] max-lg:w-[90vw]"
                     sx={{
                         marginTop: 6,
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent: "center",
-
-
-                        width: "35vw"
+                        
+                        
                     }}
+                    
 
                 >
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>

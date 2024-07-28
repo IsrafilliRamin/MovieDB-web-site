@@ -52,7 +52,7 @@ const Header = () => {
             {signupData?.user === "user"  ?    <NavLink to="favoritelist"><div className="relative"><FavoriteIcon  className='text-red-500 max-sm:!text-4xl' /> <div className='absolute top-[-7px] right-[-7px] bg-blue-400 text-white rounded-full w-[17px] h-[17px] flex items-center justify-center'>{watchlistCount}</div></div></NavLink>  
                        : ""  }    
                <div className="flex items-center justify-center gap-3" > <AccountBoxIcon titleAccess='Log out' onClick={()=>logOut()} className='cursor-pointer max-sm:!text-4xl' /> {signupData ? <span className='text-green-400'>{signupData.nameFirst} <span className='border-b capitalize text-yellow-300 border-blue-400'>- {signupData.user}</span> </span> : <span>Guest</span> }   </div> 
-               <MenuIcon onClick={()=>handleNavBar()} className='lg:invisible  max-lg:hidden max-sm:!text-4xl'/>
+               <MenuIcon onClick={()=>handleNavBar()} className='lg:invisible  max-lg:hidden max-sm:!text-4xl  hover:text-blue-500'/>
                 </div>
             </nav>
         </div>
