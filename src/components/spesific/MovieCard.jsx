@@ -17,7 +17,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useDispatch, useSelector } from 'react-redux';
 import LogoMovie from "../../assets/logoDB.png"
 import StarIcon from '@mui/icons-material/Star';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { brokenHeart, deleteMovies, favoriteHeart, getAllData, getInfoMesaj } from '../../redux/createSlice/counterSlice';
 import HeartBrokenIcon from '@mui/icons-material/HeartBroken';
 import SpringModal from './Modal';
@@ -49,22 +49,26 @@ export default function RecipeReviewCard() {
     const { data } = useSelector(state => state.allState);
     const API_IMG = "https://image.tmdb.org/t/p/w500";
     const dispatch = useDispatch();
+    const signupData = JSON.parse(localStorage.getItem('signin'))
+    const navigate = useNavigate();
 
 
-    console.log(data);
+    const backLogin = ()=>{
+        alert("Please sign up")
+        navigate("/")
+    };
 
 
-
-/* item center a function yazilsin */
+    /* item center a function yazilsin */
     return (
         <div className='flex flex-wrap  justify-between max-sm:justify-center gap-10'>
             {
                 data?.map((item) => (
 
 
-                    <Card   className='max-sm:!w-[90vw] !bg-transparent border-2   !border-borderBox !rounded-xl !duration-300 w-[300px] !transition-all !ease-in-out  !text-textColor   shadow-none hover:shadow-custom-hover' sx={{ maxWidth: 345 }}>
+                    <Card className='max-sm:!w-[90vw] !bg-transparent border-2   !border-borderBox !rounded-xl !duration-300 w-[300px] !transition-all !ease-in-out  !text-textColor   shadow-none hover:shadow-custom-hover' sx={{ maxWidth: 345 }}>
                         <CardHeader
-                       
+
                             avatar={
                                 <Avatar sx={{ bgcolor: "transparent" }} aria-label="recipe">
                                     <img src={LogoMovie} alt="" />
@@ -75,7 +79,7 @@ export default function RecipeReviewCard() {
                                     {/* <MoreVertIcon /> */} <StarIcon className='text-yellow-500' /> <div className='text-yellow-500 text-sm'>{item.vote_average}</div>
                                 </IconButton>
                             }
-                            
+
                             title={item.original_title}
                             subheader={item.release_date}
                         />
@@ -89,24 +93,24 @@ export default function RecipeReviewCard() {
                             />
                         </Link>
                         <CardContent className='!relative'>
-                            <Typography  className='!text-white' variant="body2" color="text.secondary">
+                            <Typography className='!text-white' variant="body2" color="text.secondary">
                                 {item.title}
                             </Typography>
                         </CardContent>
                         <CardActions className='flex items-start' disableSpacing>
                             <IconButton aria-label="add to favorites">
-                                {item.adult ? <FavoriteIcon onClick={() => dispatch(favoriteHeart(item.id))} className='text-red-500' /> : <HeartBrokenIcon onClick={() => dispatch(brokenHeart(item.id))} className='text-red-800' />}
+                             {signupData?.user === "user"  ?  item.adult ? <FavoriteIcon onClick={() => dispatch(favoriteHeart(item.id))} className='text-red-500' /> : <HeartBrokenIcon onClick={() => dispatch(brokenHeart(item.id))} className='text-red-800' />  :  <HeartBrokenIcon onClick={() => backLogin() } className='text-red-800' />}   
                             </IconButton>
                             <IconButton aria-label="share">
                                 <SpringModal> <ShareIcon className='text-white' /> </SpringModal>
                             </IconButton>
 
                             <IconButton className='relative left-5' aria-label="delete">
-                                <DeleteIcon onClick={()=>dispatch(deleteMovies(item.id))} className='text-purple-500' />
+                          {signupData?.user === "admin"  ?    <DeleteIcon onClick={() => dispatch(deleteMovies(item.id))} className='text-purple-500' />  : ""}     
                             </IconButton>
                             <IconButton className='relative left-5' aria-label="delete">
-                                <FormModal  item={item}> <CreateIcon className='text-yellow-500' /></FormModal>
-                               
+                             {signupData?.user === "admin"  ? <FormModal item={item}> <CreateIcon className='text-yellow-500' /></FormModal>   :  ""}   
+
                             </IconButton>
 
                             <ExpandMore

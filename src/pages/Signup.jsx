@@ -5,7 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+import { Link } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -51,28 +51,31 @@ export default function Signup() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        
-        
-         const SignUpData =   {
+        const SignUpData = {
             nameFirst: data.get('firstName'),
             nameLast: data.get('lastName'),
             email: data.get('email'),
             password: data.get('password'),
-            user:specialUser
+            user: specialUser
         }
-        console.log(SignUpData);
-        navigate("/signin");
+        if (data.get('firstName').trim() === "" || data.get('lastName').trim() === ""
+            || data.get('email').trim() === "" || data.get('password').trim() === "") {
+            alert("please fill all boxes");
+        }else{
+            navigate("/signin");
+            localStorage.setItem("signup", JSON.stringify(SignUpData));
+        }; 
     };
 
 
-   
 
-   
+
+
 
 
     return (
-        <ThemeProvider  theme={defaultTheme}>
-            <Container   className="!h-[100vh] !max-w-full !w-[100vw] !p-0 !m-0  overflow-hidden !flex-column !flex !items-center !justify-center" >
+        <ThemeProvider theme={defaultTheme}>
+            <Container className="!h-[100vh] !max-w-full !w-[100vw] !p-0 !m-0  overflow-hidden !flex-column !flex !items-center !justify-center" >
                 <CssBaseline />
                 <Box
                     sx={{
@@ -80,12 +83,12 @@ export default function Signup() {
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
-                        justifyContent:"center",
-                       
-                       
-                        width:"35vw"
+                        justifyContent: "center",
+
+
+                        width: "35vw"
                     }}
-                    
+
                 >
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                         <LockOutlinedIcon />
@@ -150,15 +153,15 @@ export default function Signup() {
                                         >
                                             <MenuItem value="user">User</MenuItem>
                                             <MenuItem value="admin">Admin</MenuItem>
-                                          
+
                                         </Select>
                                     </FormControl>
                                 </Box>
                             </Grid>
                             <Grid item xs={12}>
                                 <FormControlLabel
-                                required
-                                    control={<Checkbox  required value="allowExtraEmails" color="primary" />}
+                                    required
+                                    control={<Checkbox required value="allowExtraEmails" color="primary" />}
                                     label="I want to receive inspiration, marketing promotions and updates via email."
                                 />
                             </Grid>
@@ -173,14 +176,14 @@ export default function Signup() {
                         </Button>
                         <Grid container alignItems="center" justifyContent="center">
                             <Grid item>
-                                <Link href="#" variant="body2">
+                                <Link to="/signin" variant="body2">
                                     Already have an account? Sign in
                                 </Link>
                             </Grid>
                         </Grid>
                     </Box>
                 </Box>
-               
+
             </Container>
         </ThemeProvider>
     );

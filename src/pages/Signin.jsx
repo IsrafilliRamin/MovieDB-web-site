@@ -5,7 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+import { Link } from 'react-router-dom';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -13,7 +13,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import loginIMg from "../assets/loginIMG.png"
-
+import { useNavigate } from 'react-router';
 
 function Copyright(props) {
   return (
@@ -33,13 +33,28 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function Signin() {
+
+
+  const signupData = JSON.parse(localStorage.getItem('signup'))
+  const navigate = useNavigate();
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+   
+    if (data.get('email').trim() === ""
+      || data.get('password').trim() === "") {
+      alert("please fill all boxes")
+    } else if (signupData.email === data.get('email').trim() && signupData.password === data.get('password').trim()) {
+      navigate("/home");
+      localStorage.setItem('signin',JSON.stringify(signupData))
+    } else {
+      alert("login and password incorrect");
+    };
+
+
+
   };
 
   return (
@@ -58,7 +73,7 @@ export default function Signin() {
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
             backgroundSize: '1300px',
             backgroundPosition: 'center',
-            backgroundRepeat:"no-repeat",
+            backgroundRepeat: "no-repeat",
           }}
         />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -69,6 +84,9 @@ export default function Signin() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
+              justifyContent: 'center',
+              height: '90%',
+
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -117,7 +135,7 @@ export default function Signin() {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link to="/" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>

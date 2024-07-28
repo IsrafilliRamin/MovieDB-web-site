@@ -8,9 +8,18 @@ import { getNameMovies } from '../../redux/createSlice/counterSlice'
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import { useNavigate } from 'react-router';
 const Header = () => {
     const {watchlistCount} = useSelector(state=>state.allState)
     const dispatch = useDispatch();
+    const signupData = JSON.parse(localStorage.getItem('signin'))
+    const navigate = useNavigate();
+
+
+    const logOut = () =>{
+        localStorage.removeItem('signin');
+        navigate("/");
+    };
 
 
     return (
@@ -30,7 +39,7 @@ const Header = () => {
                 <div className='flex gap-7 items-center'>
                   <NavLink to="favoritelist"><div className="relative"><FavoriteIcon  className='text-red-500 max-sm:!text-4xl' /> <div className='absolute top-[-7px] right-[-7px] bg-blue-400 text-white rounded-full w-[17px] h-[17px] flex items-center justify-center'>{watchlistCount}</div></div></NavLink>  
                    
-               <NavLink to={"/"} > <AccountBoxIcon className='cursor-pointer max-sm:!text-4xl' />  </NavLink> 
+               <div className="flex items-center justify-center gap-3" > <AccountBoxIcon onClick={()=>logOut()} className='cursor-pointer max-sm:!text-4xl' /> {signupData ? <span className='text-green-400'>{signupData.nameFirst}</span> : <span>Guest</span> }   </div> 
                <MenuIcon className='lg:invisible  max-lg:hidden max-sm:!text-4xl'/>
                 </div>
             </nav>
