@@ -34,7 +34,7 @@ function Copyright(props) {
 }
 
 
-// TODO remove, this demo shouldn't need to reset the theme.
+
 
 const defaultTheme = createTheme();
 
@@ -46,6 +46,8 @@ export default function Signup() {
     const [specialUser, setSpecialUser] = React.useState('');
 
     const navigate = useNavigate();
+    const ref = React.useRef();
+
 
 
     const handleSubmit = (event) => {
@@ -61,10 +63,17 @@ export default function Signup() {
         if (data.get('firstName').trim() === "" || data.get('lastName').trim() === ""
             || data.get('email').trim() === "" || data.get('password').trim() === "") {
             alert("please fill all boxes");
-        }else{
+        } else if (ref.current.firstChild.checked === false) {
+            alert("agree to the terms");
+            ref.current.setAttribute("style","color:red!important")
+            setTimeout(()=>{
+                ref.current.setAttribute("style","")
+            },600)
+        }
+        else {
             navigate("/signin");
             localStorage.setItem("signup", JSON.stringify(SignUpData));
-        }; 
+        };
     };
 
 
@@ -161,10 +170,11 @@ export default function Signup() {
                             <Grid item xs={12}>
                                 <FormControlLabel
                                     required
-                                    control={<Checkbox required value="allowExtraEmails" color="primary" />}
+                                    control={<Checkbox ref={ref} required value="allowExtraEmails" color="primary" />}
                                     label="I want to receive inspiration, marketing promotions and updates via email."
                                 />
                             </Grid>
+
                         </Grid>
                         <Button
                             type="submit"

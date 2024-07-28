@@ -37,7 +37,7 @@ export default function Signin() {
 
   const signupData = JSON.parse(localStorage.getItem('signup'))
   const navigate = useNavigate();
-
+  const ref = React.useRef()
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -46,7 +46,13 @@ export default function Signin() {
     if (data.get('email').trim() === ""
       || data.get('password').trim() === "") {
       alert("please fill all boxes")
-    } else if (signupData.email === data.get('email').trim() && signupData.password === data.get('password').trim()) {
+    } else if (ref.current.firstChild.checked === false) {
+      alert("agree to the terms");
+      ref.current.setAttribute("style","color:red!important")
+      setTimeout(()=>{
+          ref.current.setAttribute("style","")
+      },600)
+  } else if (signupData.email === data.get('email').trim() && signupData.password === data.get('password').trim()) {
       navigate("/home");
       localStorage.setItem('signin',JSON.stringify(signupData))
     } else {
@@ -117,7 +123,7 @@ export default function Signin() {
                 autoComplete="current-password"
               />
               <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
+                control={<Checkbox ref={ref} value="remember" color="primary" />}
                 label="Remember me"
               />
               <Button

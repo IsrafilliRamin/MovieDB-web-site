@@ -99,7 +99,9 @@ export default function RecipeReviewCard() {
                         </CardContent>
                         <CardActions className='flex items-start' disableSpacing>
                             <IconButton aria-label="add to favorites">
-                             {signupData?.user === "user"  ?  item.adult ? <FavoriteIcon onClick={() => dispatch(favoriteHeart(item.id))} className='text-red-500' /> : <HeartBrokenIcon onClick={() => dispatch(brokenHeart(item.id))} className='text-red-800' />  :  <HeartBrokenIcon onClick={() => backLogin() } className='text-red-800' />}   
+                             {signupData?.user === "user"  ?  
+                             item.adult ? <FavoriteIcon onClick={() => dispatch(favoriteHeart(item.id))} className='text-red-500' /> : <HeartBrokenIcon onClick={() => dispatch(brokenHeart(item.id))} className='text-red-800' /> 
+                              : signupData?.user === "admin" ?  ""   :   <HeartBrokenIcon onClick={() => backLogin() } className='text-red-800' />}   
                             </IconButton>
                             <IconButton aria-label="share">
                                 <SpringModal> <ShareIcon className='text-white' /> </SpringModal>
