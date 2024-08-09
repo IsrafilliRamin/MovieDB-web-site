@@ -9,6 +9,7 @@ import Upcoming from "../pages/Upcoming";
 import FavoriteList from "../pages/FavoriteList";
 import Signup from "../pages/Signup";
 import Signin from "../pages/Signin";
+import Basket from "../pages/Basket";
 
 
 
@@ -56,6 +57,10 @@ export const ROUTER = [
             {
                 path: "/details/:id",
                 element: <DetailsMovie />
+            },
+            {
+                path: "/basket",
+                element: <Basket/>
             }
         ]
     },

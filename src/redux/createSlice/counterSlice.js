@@ -7,13 +7,15 @@ const counterSlice = createSlice({
     name: "counter",
     initialState: {
         watchlistCount: JSON.parse(localStorage.getItem("watchCount")) ? JSON.parse(localStorage.getItem("watchCount")) : 0,
+        basketCount: JSON.parse(sessionStorage.getItem("basketCount"))  ?  JSON.parse(sessionStorage.getItem("basketCount"))  :  0,
         data: JSON.parse(localStorage.getItem('heart')) ? JSON.parse(localStorage.getItem('heart')) : [],
         movieName: "",
         searchValue: "",
         favoriteHeartArray: JSON.parse(localStorage.getItem('watchlist')) ? JSON.parse(localStorage.getItem('watchlist')) : [],
         infoMesaj: [],
-        editMovies:[],
-        allEditVal:{}
+        editMovies: [],
+        allEditVal: {},
+        basketArr: JSON.parse(sessionStorage.getItem("basketArr")) ? JSON.parse(sessionStorage.getItem("basketArr")) : [],
     },
     reducers: {
 
@@ -28,6 +30,21 @@ const counterSlice = createSlice({
             state.watchlistCount += 1;
             localStorage.setItem("watchCount", JSON.stringify(state.watchlistCount));
         },
+        basketFun: (state, action) => {
+            
+        },
+        getBasket: (state, action) => {
+            state.basketArr.push(state.data.find(item => item.id === action.payload));
+            sessionStorage.setItem("basketArr", JSON.stringify(state.basketArr));
+            state.basketCount = state.basketArr.length;
+            sessionStorage.setItem("basketCount", JSON.stringify(state.basketCount));
+        },
+        getDeleteBasket: (state, action) => {
+            state.basketArr =  state.basketArr.filter(item => item.id !== action.payload); 
+            sessionStorage.setItem("basketArr", JSON.stringify(state.basketArr));
+            state.basketCount = state.basketArr.length;
+            sessionStorage.setItem("basketCount", JSON.stringify(state.basketCount));
+        },
         getNameMovies: (state, action) => {
             state.movieName = action.payload;
         },
@@ -41,8 +58,6 @@ const counterSlice = createSlice({
                         ...item,
                         adult: !item.adult
                     }
-
-
                 }
                 return item
             });
@@ -134,19 +149,19 @@ const counterSlice = createSlice({
         },
         deleteMovies: (state, action) => {
             state.data = state.data.filter(item => item.id !== action.payload)
-           
+
             Swal.fire({
                 icon: "error",
                 title: "Movie Deleted",
-               /*  text: "Something went wrong!", */
-              });
+                /*  text: "Something went wrong!", */
+            });
         },
         editMovies: (state, action) => {
-            state.data = state.data.map(item=>{
-                if(item.id === action.payload){
+            state.data = state.data.map(item => {
+                if (item.id === action.payload) {
                     return {
                         ...item,
-                        title:state.allEditVal.title,
+                        title: state.allEditVal.title,
                         original_title: state.allEditVal.originalTitle
                     };
                 };
@@ -156,6 +171,7 @@ const counterSlice = createSlice({
         getEditAllValues: (state, action) => {
             state.allEditVal = action.payload
         },
+
     }
 })
 
@@ -171,5 +187,8 @@ export const { watchlistFun,
     handleNavData,
     deleteMovies,
     getEditAllValues,
-    editMovies } = counterSlice.actions
+    editMovies,
+    basketFun,
+    getBasket,
+    getDeleteBasket } = counterSlice.actions
 export default counterSlice.reducer

@@ -18,11 +18,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import LogoMovie from "../../assets/logoDB.png"
 import StarIcon from '@mui/icons-material/Star';
 import { Link, useNavigate } from 'react-router-dom';
-import { brokenHeart, deleteMovies, favoriteHeart, getAllData, getInfoMesaj } from '../../redux/createSlice/counterSlice';
+import { brokenHeart, deleteMovies, favoriteHeart, getAllData, getBasket, getInfoMesaj } from '../../redux/createSlice/counterSlice';
 import HeartBrokenIcon from '@mui/icons-material/HeartBroken';
 import SpringModal from './Modal';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CreateIcon from '@mui/icons-material/Create';
+import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import FormModal from './FormModal';
 
 
@@ -52,8 +53,10 @@ export default function RecipeReviewCard() {
     const signupData = JSON.parse(localStorage.getItem('signin'))
     const navigate = useNavigate();
 
+    
 
-    const backLogin = ()=>{
+
+    const backLogin = () => {
         alert("Please sign up")
         navigate("/")
     };
@@ -99,19 +102,23 @@ export default function RecipeReviewCard() {
                         </CardContent>
                         <CardActions className='flex items-start' disableSpacing>
                             <IconButton aria-label="add to favorites">
-                             {signupData?.user === "user"  ?  
-                             item.adult ? <FavoriteIcon onClick={() => dispatch(favoriteHeart(item.id))} className='text-red-500' /> : <HeartBrokenIcon onClick={() => dispatch(brokenHeart(item.id))} className='text-red-800' /> 
-                              : signupData?.user === "admin" ?  ""   :   <HeartBrokenIcon onClick={() => backLogin() } className='text-red-800' />}   
+                                {signupData?.user === "user" ?
+                                    item.adult ? <FavoriteIcon onClick={() => dispatch(favoriteHeart(item.id))} className='text-red-500' /> : <HeartBrokenIcon onClick={() => dispatch(brokenHeart(item.id))} className='text-red-800' />
+                                    : signupData?.user === "admin" ? "" : <HeartBrokenIcon onClick={() => backLogin()} className='text-red-800' />}
+                            </IconButton>
+
+                            <IconButton aria-label="share">
+                            {/* @@@@@@@@@@@@@ */}    <ShoppingBasketIcon onClick={()=>dispatch(getBasket(item.id))} className='text-white' />
                             </IconButton>
                             <IconButton aria-label="share">
                                 <SpringModal> <ShareIcon className='text-white' /> </SpringModal>
                             </IconButton>
 
                             <IconButton className='relative left-5' aria-label="delete">
-                          {signupData?.user === "admin"  ?    <DeleteIcon onClick={() => dispatch(deleteMovies(item.id))} className='text-purple-500' />  : ""}     
+                                {signupData?.user === "admin" ? <DeleteIcon onClick={() => dispatch(deleteMovies(item.id))} className='text-purple-500' /> : ""}
                             </IconButton>
                             <IconButton className='relative left-5' aria-label="delete">
-                             {signupData?.user === "admin"  ? <FormModal item={item}> <CreateIcon className='text-yellow-500' /></FormModal>   :  ""}   
+                                {signupData?.user === "admin" ? <FormModal item={item}> <CreateIcon className='text-yellow-500' /></FormModal> : ""}
 
                             </IconButton>
 

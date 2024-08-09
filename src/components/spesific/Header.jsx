@@ -8,9 +8,10 @@ import { getNameMovies } from '../../redux/createSlice/counterSlice'
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import { useNavigate } from 'react-router';
 const Header = () => {
-    const {watchlistCount} = useSelector(state=>state.allState)
+    const {watchlistCount,basketCount} = useSelector(state=>state.allState)
     const dispatch = useDispatch();
     const signupData = JSON.parse(localStorage.getItem('signin'))
     const navigate = useNavigate();
@@ -21,7 +22,7 @@ const Header = () => {
         navigate("/");
     };
 
-    console.log();
+
 
     const handleNavBar = ()=>{
         if(ref.current.className.includes("max-lg:left-[-100%]") === true){
@@ -50,7 +51,8 @@ const Header = () => {
                 </ul>
                 <div className='flex gap-7 items-center'>
             {signupData?.user === "user"  ?    <NavLink to="favoritelist"><div className="relative"><FavoriteIcon  className='text-red-500 max-sm:!text-4xl' /> <div className='absolute top-[-7px] right-[-7px] bg-blue-400 text-white rounded-full w-[17px] h-[17px] flex items-center justify-center'>{watchlistCount}</div></div></NavLink>  
-                       : ""  }    
+                       : ""  }   
+                    <NavLink  to="/basket" ><div className="relative"><ShoppingBasketIcon className='max-sm:!text-4xl text-white' /> <div className='absolute top-[-7px] right-[-7px] bg-blue-400 text-white rounded-full w-[17px] h-[17px] flex items-center justify-center'>{basketCount}</div></div></NavLink>
                <div className="flex items-center justify-center gap-3" > <AccountBoxIcon titleAccess='Log out' onClick={()=>logOut()} className='cursor-pointer max-sm:!text-4xl' /> {signupData ? <span className='text-green-400'>{signupData.nameFirst} <span className='border-b capitalize text-yellow-300 border-blue-400'>- {signupData.user}</span> </span> : <span>Guest</span> }   </div> 
                <MenuIcon onClick={()=>handleNavBar()} className='lg:invisible  max-lg:hidden max-sm:!text-4xl  hover:text-blue-500'/>
                 </div>
