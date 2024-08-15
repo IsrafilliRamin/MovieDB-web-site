@@ -6,15 +6,16 @@ import { getAllData, handleNavData } from '../redux/createSlice/counterSlice'
 
 const Home = () => {
 
-    let { movieName } = useSelector(state => state.allState)
-    const dispatch = useDispatch()
+    let { movieName,data } = useSelector(state => state.allState);
+    const dispatch = useDispatch();
 
+    
 
     useEffect(() => {
         if (movieName === "") {
             movieName = "popular"
             getData(movieName).then(resp => dispatch(getAllData(resp.results.map(item => (
-                { ...item, isLoad: false }
+                { ...item, isLoad: false, basketCount:0 }
               )))))
         } else {
             getData(movieName).then(resp => dispatch(handleNavData(resp.results)))

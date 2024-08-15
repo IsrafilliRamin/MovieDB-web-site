@@ -20,7 +20,7 @@ const counterSlice = createSlice({
     reducers: {
 
         getAllData: (state, action) => {
-
+            
             state.data = state.data.length > 0 ? state.data : action.payload;
         },
         handleNavData: (state, action) => {
@@ -34,16 +34,76 @@ const counterSlice = createSlice({
             
         },
         getBasket: (state, action) => {
+            state.data = state.data.map((item)=>{
+                return {
+                    ...item,
+                    basketCount:1,
+                    allREsult:item.vote_count
+                }
+            });
             state.basketArr.push(state.data.find(item => item.id === action.payload));
             sessionStorage.setItem("basketArr", JSON.stringify(state.basketArr));
             state.basketCount = state.basketArr.length;
             sessionStorage.setItem("basketCount", JSON.stringify(state.basketCount));
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: "🧺 Added to your basketlist"
+            });
         },
         getDeleteBasket: (state, action) => {
             state.basketArr =  state.basketArr.filter(item => item.id !== action.payload); 
             sessionStorage.setItem("basketArr", JSON.stringify(state.basketArr));
             state.basketCount = state.basketArr.length;
             sessionStorage.setItem("basketCount", JSON.stringify(state.basketCount));
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: "🧺 Deleted from your basketlist"
+            });
+        },
+        getBasketIncrement:(state,action)=>{
+           
+           
+            state.basketArr = state.basketArr.map((item)=>{
+                if(item.id === action.payload){
+                    item.basketCount +=1;
+                    item.allREsult = item.basketCount * item.vote_count;
+                }
+                return item;
+            })
+            sessionStorage.setItem("basketArr", JSON.stringify(state.basketArr));
+        },
+        getBasketDecrement:(state,action)=>{
+           
+            state.basketArr = state.basketArr.map((item)=>{
+                if(item.id === action.payload){
+                    item.basketCount -=1;
+                    item.allREsult = item.basketCount * item.vote_count;
+                }
+                return item;
+            })
+            sessionStorage.setItem("basketArr", JSON.stringify(state.basketArr));
         },
         getNameMovies: (state, action) => {
             state.movieName = action.payload;
@@ -74,6 +134,7 @@ const counterSlice = createSlice({
                     toast.onmouseleave = Swal.resumeTimer;
                 }
             });
+            
             Toast.fire({
                 icon: "success",
                 title: "❤️ Added to your watchlist"
@@ -190,5 +251,7 @@ export const { watchlistFun,
     editMovies,
     basketFun,
     getBasket,
-    getDeleteBasket } = counterSlice.actions
+    getDeleteBasket,
+    getBasketIncrement,
+    getBasketDecrement } = counterSlice.actions
 export default counterSlice.reducer

@@ -11,25 +11,43 @@ import {
   MDBRow,
   MDBTypography,
 } from "mdb-react-ui-kit";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getDeleteBasket } from "../redux/createSlice/counterSlice";
+import { getBasketDecrement, getBasketIncrement, getDeleteBasket } from "../redux/createSlice/counterSlice";
+import { Link } from "react-router-dom";
 
 export default function Basket() {
 
   const { basketArr } = useSelector(state => state.allState);
   const API_IMG = "https://image.tmdb.org/t/p/w500";
   const dispatch = useDispatch();
+  const [discount, setDiscount] = useState("");
+  const ref = useRef();
 
 
   let Price = 0;
   basketArr.map((item) => {
-    Price += item.vote_count;
-  })
-  console.log(Price);
+    Price += item.allREsult;
 
+  })
+
+
+
+  const handleBuy = () => {
+    if (discount === "ENDIRIM20") {
+      alert("Endirim tetbiq olundu")
+      setDiscount("");
+      Price = Price - (Price * 20) / 100;
+      ref.current.innerHTML = Price
+
+
+    }
+    else {
+      alert("Promokod yanlışdır")
+    }
+  }
 
 
   return (
@@ -47,13 +65,13 @@ export default function Basket() {
                           Shopping Cart
                         </MDBTypography>
                         <MDBTypography className="mb-0 text-muted">
-                          3 items
+                          {basketArr.length} items
                         </MDBTypography>
                       </div>
 
                       <hr className="my-4" />
                       {basketArr.map(item => (
-                        <MDBRow className="mb-4 d-flex justify-content-between align-items-center">
+                        <MDBRow key={item.id} className="mb-4 d-flex justify-content-between align-items-center">
                           <MDBCol md="2" lg="2" xl="2">
                             <MDBCardImage
                               src={API_IMG + item.poster_path}
@@ -68,25 +86,25 @@ export default function Basket() {
                             </MDBTypography>
                           </MDBCol>
                           <MDBCol md="3" lg="3" xl="3" className="d-flex align-items-center">
-                            <MDBBtn color="link" className="px-2">
+                            <MDBBtn onClick={() => dispatch(getBasketDecrement(item.id))} color="link" className="px-2">
                               <MDBIcon fas icon="minus" />
                             </MDBBtn>
 
-                            <MDBInput type="number" min="0" defaultValue={1} size="sm" />
+                            <MDBInput type="number" min="0" value={item.basketCount} defaultValue={item.basketCount} size="sm" />
 
-                            <MDBBtn color="link" className="px-2">
+                            <MDBBtn onClick={() => dispatch(getBasketIncrement(item.id))} color="link" className="px-2">
                               <MDBIcon fas icon="plus" />
                             </MDBBtn>
                           </MDBCol>
                           <MDBCol md="3" lg="2" xl="2" className="text-end">
-                            <MDBTypography tag="h6" className="mb-0  text-blue-600">
-                              € {item.vote_count}
+                            <MDBTypography tag="h6"  className="mb-0  text-blue-600">
+                              € {item.allREsult}
                             </MDBTypography>
                           </MDBCol>
                           <MDBCol md="1" lg="1" xl="1" className="text-end">
-                            <a onClick={()=>dispatch(getDeleteBasket(item.id))}  href="#!" className="text-muted">
+                            <a onClick={() => dispatch(getDeleteBasket(item.id))} href="#!" className="text-muted">
                               <MDBIcon fas icon="times" />
-                            
+
                             </a>
                           </MDBCol>
                         </MDBRow>
@@ -176,14 +194,15 @@ export default function Basket() {
                       <div className="pt-5">
                         <MDBTypography tag="h6" className="mb-0">
                           <MDBCardText tag="a" href="#!" className="text-body">
-                            <MDBIcon fas icon="long-arrow-alt-left me-2" /> Back
-                            to shop
+                            <MDBIcon fas icon="long-arrow-alt-left me-2" /> <Link to="/home">Back
+                              to shop
+                            </Link>
                           </MDBCardText>
                         </MDBTypography>
                       </div>
                     </div>
                   </MDBCol>
-                  <MDBCol lg="4" className="bg-grey">
+                  <MDBCol lg="4" className="bg-slate-800">
                     <div className="p-5">
                       <MDBTypography tag="h3" className="fw-bold mb-5 mt-2 pt-1">
                         Summary
@@ -193,7 +212,7 @@ export default function Basket() {
 
                       <div className="d-flex justify-content-between mb-4">
                         <MDBTypography tag="h5" className="text-uppercase">
-                          items 3
+                          items {basketArr.length}
                         </MDBTypography>
                         <MDBTypography tag="h5">€ {Price}</MDBTypography>
                       </div>
@@ -212,11 +231,11 @@ export default function Basket() {
                       </div>
 
                       <MDBTypography tag="h5" className="text-uppercase mb-3">
-                        Give code
+                        Give code (Discount 20 %) -- ENDIRIM20
                       </MDBTypography>
 
                       <div className="mb-5">
-                        <MDBInput size="lg" label="Enter your code" />
+                        <MDBInput value={discount} onChange={(e) => setDiscount(e.target.value)} size="lg" label="Enter your code" />
                       </div>
 
                       <hr className="my-4" />
@@ -225,11 +244,11 @@ export default function Basket() {
                         <MDBTypography tag="h5" className="text-uppercase">
                           Total price
                         </MDBTypography>
-                        <MDBTypography tag="h5">€ {Price}</MDBTypography>
+                        <MDBTypography ref={ref} tag="h5">€ {Price}</MDBTypography>
                       </div>
 
-                      <MDBBtn color="dark" block size="lg">
-                        Register
+                      <MDBBtn onClick={() => handleBuy()} color="dark" block size="lg">
+                        Buy
                       </MDBBtn>
                     </div>
                   </MDBCol>
