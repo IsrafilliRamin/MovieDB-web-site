@@ -31,8 +31,13 @@ export default function Basket() {
   basketArr.map((item) => {
     Price += item.allREsult;
 
+    
   })
 
+
+  if (Price === 0) {
+    ref.current.innerHTML = Price
+  }
 
 
   const handleBuy = () => {
@@ -97,7 +102,7 @@ export default function Basket() {
                             </MDBBtn>
                           </MDBCol>
                           <MDBCol md="3" lg="2" xl="2" className="text-end">
-                            <MDBTypography tag="h6"  className="mb-0  text-blue-600">
+                            <MDBTypography tag="h6" className="mb-0  text-blue-600">
                               € {item.allREsult}
                             </MDBTypography>
                           </MDBCol>
