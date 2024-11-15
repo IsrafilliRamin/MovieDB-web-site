@@ -33,8 +33,7 @@ export default function Basket() {
   }, [basketArr]);
 
   const handleBuy = () => {
-    console.log("test");
-
+  
     if (discount === "ENDIRIM20") {
       alert("Endirim tetbiq olundu");
       setDiscount("");

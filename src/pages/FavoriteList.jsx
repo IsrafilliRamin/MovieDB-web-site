@@ -44,7 +44,7 @@ const FavoriteList = () => {
   const dispatch = useDispatch();
 
 
-  console.log(favoriteHeartArray);
+  .log(favoriteHeartArray);
 
   const handleExpandClick = (id) => {
       const updatedData = data.map((item) => {

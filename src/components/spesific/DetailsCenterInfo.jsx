@@ -2,7 +2,6 @@ import React from 'react'
 
 const DetailsCenterInfo = ({detailsData}) => {
     const API_IMG = "https://image.tmdb.org/t/p/original/";
-    console.log(detailsData,"API");
   return (
     <div className='flex items-center max-xl:gap-20 justify-between w-[80vw] max-xl:flex-wrap max-xl:justify-center'>
         <div className='w-[500px] h-[700px] max-sm:h-[400px]'>

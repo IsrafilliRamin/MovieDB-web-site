@@ -21,7 +21,6 @@ const EditForm = ({ item }) => {
 
 
     const { allEditVal } = useSelector(state => state.allState)
-console.log(allEditVal,"TEST");
     const dispatch = useDispatch();
 
 
